@@ -8,6 +8,7 @@ core-utils = {git = "https://github.com/VIGILANCE-IVA/core-utils.git"}
 aiohttp = "*"
 aiohttp-cors = "*"
 tensorflow = "*"
+camera-threading = {git = "https://github.com/VIGILANCE-IVA/camera-thread.git"}
 
 [dev-packages]
 

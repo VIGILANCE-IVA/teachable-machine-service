@@ -1,4 +1,5 @@
 __pycache__/
 *.h5
+*.txt
 .idea
 data/

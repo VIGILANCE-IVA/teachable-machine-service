@@ -6,25 +6,39 @@ from aiohttp.web import Response, View
 from aiohttp_cors import CorsViewMixin
 from core_utils.json import jsonify
 from teachable import model
+from teachable_video import teachable_video
 
 
 class PredictionApi(View, CorsViewMixin):
     async def post(self):
-        try:
-            body = await self.request.post()
-            # decode image
-            img = cv.imdecode(np.fromstring(body['image'].file.read(), np.uint8), cv.IMREAD_UNCHANGED)
-            predictions = await model.predict(img)
+        body = await self.request.post()
+        # decode image
+        img = cv.imdecode(np.fromstring(body['image'].file.read(), np.uint8), cv.IMREAD_UNCHANGED)
+        predictions = model.predict(img)
 
-            return Response(
-                text=jsonify(predictions),
-                content_type="application/json",
-                status=200
-            )
+        return Response(
+            text=jsonify(predictions),
+            content_type="application/json",
+            status=200
+        )
 
-        except BaseException as e:
-            return Response(
-                text=json.dumps({'message': str(e)}),
-                content_type="application/json",
-                status=400
-            )
+class VideoPredictionApi(View, CorsViewMixin):
+    async def post(self):
+        body = await self.request.json()
+        task_id = await teachable_video.add_task(body)
+
+        return Response(
+            text=jsonify({'task_id': task_id }),
+            content_type="application/json",
+            status=200
+        )
+
+    async def put(self):
+        body = await self.request.json()
+        await teachable_video.stop_task(body['task_id'])
+
+        return Response(
+            text=jsonify({'task_id': body['task_id'] }),
+            content_type="application/json",
+            status=200
+        )
