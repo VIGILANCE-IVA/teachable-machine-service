@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.6
 RUN pip install pipenv
 COPY Pipfile* /tmp
 RUN cd /tmp && pipenv lock --keep-outdated --requirements > requirements.txt
