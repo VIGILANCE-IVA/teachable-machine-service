@@ -1,3 +1,4 @@
+# source https://sourcery.ai/blog/python-docker/
 FROM python:3.7-slim as base
 
 # Setup env
@@ -15,7 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends gcc
 
 # Install python dependencies in /.venv
 COPY Pipfile .
-COPY Pipfile.lock .
+# COPY Pipfile.lock .
 RUN PIPENV_VENV_IN_PROJECT=1 pipenv install --deploy
 
 
