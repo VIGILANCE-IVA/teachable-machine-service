@@ -33,5 +33,6 @@ USER appuser
 # Install application into container
 COPY . .
 
+ENV PORT 80
 # Run the application
 CMD ["python", "app.py"]

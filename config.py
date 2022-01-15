@@ -1,12 +1,16 @@
+import os
 from collections import OrderedDict
-from os.path import abspath
 
+path = './data'
+
+if not os.path.exists(path): 
+  os.makedirs(path)
 
 class Config:
   def __init__(self):
     self.__dict__ = OrderedDict([
-      ('model', './data/model.h5'),
-      ('labels', './data/labels.txt'),
+      ('model', f'{path}/model.h5'),
+      ('labels', f'{path}/labels.txt'),
     ])
 
 
