@@ -2,6 +2,7 @@ import uuid
 from collections import OrderedDict
 from urllib import request
 
+import cv2
 from camera_threading.streamer import Capture
 from core_utils.json import jsonify
 
@@ -31,6 +32,7 @@ class TeachableVideo:
             delay = int(data['delay'])
 
         def on_frame(frame):
+            cv2.imshow('Frame', frame)
             predictions = model.predict(frame)
             result = dict(data, **{ 'predictions': predictions })
             self.webhook(data['webhook'], result)
